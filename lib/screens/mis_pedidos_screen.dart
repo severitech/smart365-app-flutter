@@ -19,8 +19,12 @@ class _MisPedidosScreenState extends State<MisPedidosScreen> {
     final authProvider = context.read<AuthProvider>();
     if (_futurePedidos == null && authProvider.isAuthenticated) {
       final token = authProvider.token;
-      if (token != null) {
-        _futurePedidos = PedidosService.instance.obtenerMisPedidos(token: token);
+      final user = authProvider.user;
+      if (token != null && user != null) {
+        _futurePedidos = PedidosService.instance.obtenerMisPedidos(
+          token: token,
+          userId: user.id,
+        );
       }
     }
   }
@@ -28,10 +32,14 @@ class _MisPedidosScreenState extends State<MisPedidosScreen> {
   Future<void> _recargarPedidos() async {
     final authProvider = context.read<AuthProvider>();
     final token = authProvider.token;
-    if (token == null) {
+    final user = authProvider.user;
+    if (token == null || user == null) {
       return;
     }
-    final future = PedidosService.instance.obtenerMisPedidos(token: token);
+    final future = PedidosService.instance.obtenerMisPedidos(
+      token: token,
+      userId: user.id,
+    );
     setState(() {
       _futurePedidos = future;
     });
