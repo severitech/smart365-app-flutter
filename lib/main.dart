@@ -13,9 +13,10 @@ import 'package:provider/provider.dart';
 import 'screens/login_screen.dart';
 import 'widgets/navbar.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'services/push_service.dart';
 
 import 'package:flutter/material.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,14 @@ void main() async {
     debugPrint('Archivo .env no disponible: $e');
   } on Exception catch (e) {
     debugPrint('Error cargando .env: $e');
+  }
+  try {
+    await Firebase.initializeApp();
+    await PushService.instance.init();
+  } catch (e) {
+    debugPrint(
+      'Warning: Firebase initialization failed or PushService failed: $e',
+    );
   }
   runApp(const MyApp());
 }

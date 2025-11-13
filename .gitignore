@@ -27,11 +27,56 @@ migrate_working_dir/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
+.packages
 .pub-cache/
 .pub/
 /build/
 /coverage/
+
+# Generated plugin registrant files (platform folders)
+**/generated_plugin_registrant.*
+**/generated_plugins.*
+
+# IDEs and editors
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+
+# Android related
+/android/.gradle/
+/android/app/debug/
+/android/app/profile/
+/android/app/release/
+/android/local.properties
+android/key.properties
+
+# Google services / Firebase (do NOT commit service account keys)
+# Keep google-services.json out of the repo unless intentionally tracked for non-sensitive projects
+**/google-services.json
+*firebase-adminsdk*.json
+firebase_b64.txt
+
+# iOS related
+/ios/Pods/
+/ios/Flutter/Flutter.framework
+/ios/Flutter/Flutter.podspec
+
+# macOS
+/macos/Flutter/Flutter.framework
+
+# Windows
+/windows/flutter/ephemeral/
+
+# Misc OS files
+.DS_Store
+Thumbs.db
+
+# Keep .env tracked by default; if it contains secrets, add it here or to global gitignore
+# .env
 
 # Symbolication related
 app.*.symbols
