@@ -2,10 +2,14 @@
 
 import 'dart:io';
 
+import 'package:app_tienda/data/auth_provider.dart';
+import 'package:app_tienda/data/carrito_provider.dart';
 import 'package:app_tienda/screens/carrito_screen.dart';
+import 'package:app_tienda/screens/mis_pedidos_screen.dart';
 import 'package:app_tienda/screens/perfil_screen.dart';
 import 'package:app_tienda/views/tienda_screen.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'screens/login_screen.dart';
 import 'widgets/navbar.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -39,19 +43,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tienda App',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+        ChangeNotifierProvider<CarritoProvider>(create: (_) => CarritoProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Tienda App',
+        theme: ThemeData(
+          primarySwatch: Colors.deepPurple,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: Scaffold(
+          appBar: Navbar(),
+          body: TiendaScreen(),
+        ),
+        routes: {
+          '/carrito': (context) => CarritoScreen(),
+          '/mis-pedidos': (context) => MisPedidosScreen(),
+          '/perfil': (context) => PerfilScreen(),
+          '/login': (context) => LoginScreen(),
+        },
+        debugShowCheckedModeBanner: false,
       ),
-      home: Scaffold(appBar: Navbar(), body: TiendaScreen()),
-      routes: {
-        '/carrito': (context) => CarritoScreen(),
-        '/perfil': (context) => PerfilScreen(),
-        '/login': (context) => LoginScreen(),
-      },
-      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../data/producto.dart';
 import '../data/carrito_provider.dart';
 
@@ -74,7 +76,7 @@ class _DetalleProductoScreenState extends State<DetalleProductoScreen> {
   }
 
   void _agregarAlCarrito(BuildContext context, Producto producto) {
-    CarritoProvider.agregarProducto(producto);
+    context.read<CarritoProvider>().agregarProducto(producto);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('${producto.descripcion} añadido al carrito'),
@@ -183,7 +185,8 @@ class _DetalleProductoScreenState extends State<DetalleProductoScreen> {
                   IconButton(
                     icon: const Icon(Icons.refresh),
                     tooltip: 'Actualizar relacionados',
-                    onPressed: _cargandoRelacionados ? null : _fetchProductosRelacionados,
+          onPressed:
+            _cargandoRelacionados ? null : () => _fetchProductosRelacionados(),
                   ),
                 ],
               ),
